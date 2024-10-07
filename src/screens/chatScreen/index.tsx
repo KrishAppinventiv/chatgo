@@ -7,7 +7,7 @@ import {Images} from '../../assets';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {addDoc, collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../firebaseConfig';
-import ChatModal from '../../components/ChatModal';
+import ChatModal from '../../components/chatModal';
 import ChatModalLongPress from '../../components/chatModalLongPress';
 import styles from './styles';
 

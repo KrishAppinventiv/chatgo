@@ -6,7 +6,7 @@ import { Images } from '../assets'
 
 
 
-const ChatModal = ({ visible, ondismiss }: { visible: any, ondismiss: any }) => {
+const chatModal = ({ visible, ondismiss }: { visible: any, ondismiss: any }) => {
     const [isModalVisible, setisModalVisible] = useState<boolean>(visible)
     const toggleModal = () => {
         ondismiss()
@@ -82,7 +82,7 @@ const ChatModal = ({ visible, ondismiss }: { visible: any, ondismiss: any }) => 
     )
 }
 
-export default ChatModal
+export default chatModal
 
 const styles = StyleSheet.create({
     modalContainer: {

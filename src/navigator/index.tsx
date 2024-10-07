@@ -40,8 +40,7 @@ const RootNavigator = () => {
           options={{headerShown: false}}
         />
 
-
-<Stack.Screen
+        <Stack.Screen
           component={Search}
           name={ScreenNames.Search}
           options={{headerShown: false}}

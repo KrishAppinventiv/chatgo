@@ -24,7 +24,7 @@ interface Message {
 }
 
 const Chat = () => {
-  const {name, profileImg, id} = useRoute().params || {};
+  const {name, profileImg, id,color} = useRoute().params || {};
 
   const [msgs, setMsgs] = useState<Message[]>([]);
   const [isModalVisible, setisModalVisible] = useState(false);
@@ -60,6 +60,17 @@ const Chat = () => {
     return () => unsubscribe();
   }, [id]);
 
+
+  const handleDelete = async (messageId: string) => {
+    try {
+      await deleteDoc(doc(db, 'messages', messageId)); 
+      console.log(`Message with id ${messageId} deleted successfully.`);
+    } catch (error) {
+      console.error('Error deleting message: ', error);
+    }
+  };
+
+
   const toggalChat = () => {
     setisModalVisible(!isModalVisible);
   };
@@ -78,6 +89,7 @@ const Chat = () => {
         _id: id,
         _name: name,
         _profileImg: profileImg,
+        color : color
       },
     });
   };
@@ -108,7 +120,7 @@ const Chat = () => {
         <Text>{currentMessage.text}</Text>
         <Text style={{fontSize: 10, color: '#b8bdc2'}}>
           {new Date(currentMessage.createdAt).toLocaleString()}{' '}
-          {/* Format date */}
+        
         </Text>
       </View>
     );
@@ -128,7 +140,7 @@ const Chat = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image source={Images.back} style={styles.blackbt} />
             </TouchableOpacity>
-            <View style={styles.profContain}>
+            <View style={[styles.profContain,{backgroundColor:color}]}>
               <Text style={styles.profIcon}>{profileImg}</Text>
             </View>
 
@@ -147,7 +159,7 @@ const Chat = () => {
           messages={msgs}
           alignTop={true}
           onLongPress={(currentMessage) => handleLongPress(currentMessage)}
-          //renderInputToolbar={handleSend}
+         
           onSend={messages => handleSend(messages)}
           user={{
             _id: id,
@@ -160,10 +172,13 @@ const Chat = () => {
         visible={isModalVisible1}
         ondismiss={toggalLongChat}
         selectedMessageId={selectedMessageId}
-  onEmojiSelect={handleEmojiSelect}
+        onEmojiSelect={handleEmojiSelect}
+        onDelete={handleDelete}
       />
     </SafeAreaProvider>
   );
 };
 
 export default Chat;
+
+

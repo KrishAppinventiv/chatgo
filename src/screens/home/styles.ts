@@ -13,7 +13,14 @@ export default StyleSheet.create({
   },
   Chattext: {
     fontSize: 16,
-    padding: 10,
+    paddingTop:10,
+    paddingLeft:10
+  },
+  Chat: {
+    fontSize: 13,
+    paddingLeft:10,
+    color:'#A9A9A9',
+    marginTop:5
   },
   listContain: {
     width: 50,
@@ -29,6 +36,7 @@ export default StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#E7EBF3',
     flexDirection: 'row',
+    justifyContent:'space-between',
     borderRadius:12
   },
   announceText: {
@@ -91,14 +99,14 @@ export default StyleSheet.create({
     marginHorizontal: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 43,
+    marginTop: 33,
   },
   main: {flex: 1, backgroundColor: '#E6EDF3'},
-  red: {flex: 0.19, backgroundColor: '#2A7BBB', justifyContent: 'center'},
+  red: {flex: 0.16, backgroundColor: '#2A7BBB', justifyContent: 'center'},
   searchContain: {
     flexDirection: 'row',
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
     marginStart: 20,
     marginEnd: 20,
 
@@ -108,7 +116,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   searchInput: {
-    marginStart: 10,
+    marginLeft: 5,
     width: '80%',
   },
 

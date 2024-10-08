@@ -20,6 +20,7 @@ import {Images} from '../../assets';
 import Contacts from 'react-native-contacts';
 import {db} from '../../firebaseConfig';
 import {collection, getDocs} from 'firebase/firestore';
+import { colors } from '../../theme';
 
 interface CustomContact {
   recordID: string;
@@ -34,6 +35,7 @@ interface User {
   id: string;
   _name: string;
   profileImg?: string;
+  color: string;
 }
 
 const Home = () => {
@@ -58,16 +60,16 @@ const Home = () => {
           ...doc.data(),
         }));
 
-        const users = messagesList
-          .map(message => message.user)
-          .filter(
-            (user, index, self) =>
-              index === self.findIndex(u => u._id === user._id),
-          );
+        // const users = messagesList
+        //   .map(message => message.user)
+        //   .filter(
+        //     (user, index, self) =>
+        //       index === self.findIndex(u => u._id === user._id),
+        //   );
 
         console.log('Fetched messages: ', messagesList);
         console.log('Unique users: ', users);
-        setUsers(users);
+        setUsers(messagesList);
       } catch (error) {
         console.error('Error fetching messages: ', error);
       }
@@ -78,16 +80,18 @@ const Home = () => {
 
   const filteredUsers = users.filter(
     user =>
-      user._name &&
-      user._name.toLowerCase().includes(searchQuery.toLowerCase()),
+      user.user && 
+    user.user._name &&
+    user.user._name.toLowerCase().includes(searchQuery.toLowerCase())
   );
   console.log('Filtered users: ', filteredUsers);
 
-  const startChat = (userId, userName, img) => {
+  const startChat = (userId, userName, img,colors) => {
     navigation.navigate('Chat', {
       id: userId,
       name: userName,
       profileImg: img,
+      color: colors
     });
   };
 
@@ -123,27 +127,33 @@ const Home = () => {
           onChangeText={setSearchQuery}
         />
       </View>
-
-      <FlatList
+{filteredUsers.length === 0 ? <View style={{justifyContent:'center',flex:1,alignItems:'center'}}><Text>No Contact Found</Text></View>:  
+ <FlatList
   data={filteredUsers}
   keyExtractor={item => item._id}
+  showsVerticalScrollIndicator={false}
   renderItem={({item}) => (
     <TouchableOpacity
-      onPress={() => startChat(item._id, item._name, item._profileImg)}>
+      onPress={() => startChat(item.user._id, item.user._name, item.user._profileImg,item.user.color)}>
       <View style={styles.list}>
-        <View style={styles.listContain}>
+        <View style={{flexDirection:'row'}}>
+        <View style={[styles.listContain,{backgroundColor:`${item.user.color}`}]}>
           <Text
             style={{
               fontSize: 20,
               color: 'white',
               textAlign: 'center',
             }}>
-            {item._profileImg}
+            {item.user._profileImg}
           </Text>
         </View>
-        <View>
-          <Text style={styles.Chattext}>{item._name}</Text>
+        <View style={{marginLeft:10}}>
+          <Text style={styles.Chattext}>{item.user._name}</Text>
+          <Text style={styles.Chat}>{item.text}</Text>
         </View>
+        </View>
+
+        <View><Text style={{color:'#888888'}}>02:58 AM</Text></View>
       </View>
     </TouchableOpacity>
   )}
@@ -161,8 +171,8 @@ const Home = () => {
     </View>
   }
   style={styles.flatStyle}
-/>
-
+/>}
+    
 
       <Modal
         transparent={true}

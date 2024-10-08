@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {colors, dimension} from '../../theme';
-
+import Data from '/Users/ai/Chatgo/src/data.json';
 export default StyleSheet.create({
     noresult: {
         textAlign: 'center',
@@ -23,6 +23,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
       },
+
       list: {
         backgroundColor: 'white',
         padding: 20,

@@ -17,11 +17,13 @@ const ChatModalLongPress = ({
   ondismiss,
   selectedMessageId,
   onEmojiSelect,
+  onDelete,
 }: {
   visible: any;
   ondismiss: any;
   selectedMessageId: any,
   onEmojiSelect: (messageId: string, emoji: { id: string; source: any }) => void;
+  onDelete: (messageId: string) => void;
 }) => {
   const [isModalVisible, setisModalVisible] = useState<boolean>(visible);
   const toggleModal = () => {
@@ -116,7 +118,12 @@ const ChatModalLongPress = ({
                 <Text style={styles.modalButtonText}>{strings.chatOp5}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.modalButton}>
+              <TouchableOpacity style={styles.modalButton}  onPress={() => {
+                  if (selectedMessageId) {
+                    onDelete(selectedMessageId); 
+                    toggleModal(); 
+                  }
+                }}>
                 <Image source={Images.delete} style={styles.buttonIcon} />
                 <Text style={styles.modalButtonTextDelete}>
                   {strings.chatModalButton4}

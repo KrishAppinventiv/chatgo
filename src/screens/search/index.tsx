@@ -22,6 +22,7 @@ interface CustomContact {
   phoneNumber: string;
   profileImg: string;
   id: number;
+  color : string
 }
 
 const Search = () => {
@@ -66,7 +67,7 @@ const Search = () => {
       }
 
       try {
-        // Check for permission
+        
         const granted = await Contacts.checkPermission();
         if (granted === 'denied') {
           const permission = await Contacts.requestPermission();
@@ -76,7 +77,7 @@ const Search = () => {
           }
         }
 
-        // Fetch contacts
+        
         const contacts = await Contacts.getAll();
         setContacts(Data as CustomContact[]);
         if (searchInputRef.current) {
@@ -115,7 +116,7 @@ const Search = () => {
 
       <FlatList
         data={searchQuery ? filteredContacts : contacts}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()} 
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
@@ -123,10 +124,12 @@ const Search = () => {
                 name: item.name,
                 profileImg: item.profileImg,
                 id: item.id,
+                color:item.color
+              
               });
             }}>
             <View style={styles.list}>
-              <View style={styles.listContain}>
+              <View style={[styles.listContain, {backgroundColor: `${item.color}`}]}>
                 <Text style={styles.circleText}>{item.profileImg}</Text>
               </View>
               <View>

@@ -22,7 +22,7 @@ interface CustomContact {
   phoneNumber: string;
   profileImg: string;
   id: number;
-  color : string
+  color: string;
 }
 
 const Search = () => {
@@ -38,18 +38,6 @@ const Search = () => {
     const isSimulator = __DEV__;
 
     if (isSimulator) {
-      const mockContacts = [
-        {
-          recordID: '1',
-          displayName: 'John Doe',
-          phoneNumbers: [{number: '123-456-7890'}],
-        },
-        {
-          recordID: '2',
-          displayName: 'Jane Smith',
-          phoneNumbers: [{number: '098-765-4321'}],
-        },
-      ];
       setContacts(Data as CustomContact[]);
 
       setTimeout(() => {
@@ -67,7 +55,6 @@ const Search = () => {
       }
 
       try {
-        
         const granted = await Contacts.checkPermission();
         if (granted === 'denied') {
           const permission = await Contacts.requestPermission();
@@ -77,7 +64,6 @@ const Search = () => {
           }
         }
 
-        
         const contacts = await Contacts.getAll();
         setContacts(Data as CustomContact[]);
         if (searchInputRef.current) {
@@ -91,7 +77,7 @@ const Search = () => {
   useEffect(() => {
     handleNewChat();
   }, []);
-  console.log(contacts);
+  console.log('check', contacts);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.head}>
@@ -116,7 +102,7 @@ const Search = () => {
 
       <FlatList
         data={searchQuery ? filteredContacts : contacts}
-        keyExtractor={item => item.id.toString()} 
+        keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
@@ -124,12 +110,15 @@ const Search = () => {
                 name: item.name,
                 profileImg: item.profileImg,
                 id: item.id,
-                color:item.color
-              
+                color: item.color,
               });
             }}>
             <View style={styles.list}>
-              <View style={[styles.listContain, {backgroundColor: `${item.color}`}]}>
+              <View
+                style={[
+                  styles.listContain,
+                  {backgroundColor: `${item.color}`},
+                ]}>
                 <Text style={styles.circleText}>{item.profileImg}</Text>
               </View>
               <View>

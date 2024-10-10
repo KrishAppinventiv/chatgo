@@ -109,6 +109,7 @@ export default StyleSheet.create({
     paddingBottom: 10,
     marginStart: 20,
     marginEnd: 20,
+alignItems:'center',
 
     backgroundColor: 'white',
     borderRadius: 8,
@@ -116,8 +117,9 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   searchInput: {
-    marginLeft: 5,
-    width: '80%',
+    flex:1,
+    marginHorizontal: 5,
+    // width: '80%',
   },
 
   modalOverlay: {

@@ -37,7 +37,7 @@ const chatModal = ({ visible, ondismiss }: { visible: any, ondismiss: any }) => 
                                 </Text>
                             </TouchableOpacity>
 
-
+                          
 
                             <TouchableOpacity style={styles.modalButton}>
                                 <Image

@@ -10,8 +10,9 @@ import {
 import React, {useState} from 'react';
 
 import strings from '../utils/string';
-import {Images} from '../assets';
+import { Images } from '../assets';
 
+console.log(Images);
 const ChatModalLongPress = ({
   visible,
   ondismiss,
@@ -31,19 +32,20 @@ const ChatModalLongPress = ({
   };
 
   const emojis = [
-    { id: 'emoji1', source: Images.emoji1 },
-    { id: 'emoji2', source: Images.emoji2 },
-    { id: 'emoji3', source: Images.emoji3 },
-    { id: 'emoji4', source: Images.emoji4 },
-    { id: 'emoji5', source: Images.emoji5 },
+    { id: 'emoji1', source: Images.emoji1 , emoji :'👍'},
+    { id: 'emoji2', source: Images.emoji2 , emoji :'❤️' },
+    { id: 'emoji3', source: Images.emoji3 , emoji :'😂'},
+    { id: 'emoji4', source: Images.emoji4 , emoji :'🎉'},
+    { id: 'emoji5', source: Images.emoji5 , emoji :'👎'},
   ];
 
 
   const handleEmojiPress = (emoji: { id: string; source: any }) => {
+    console.log(emoji)
+    console.log(emoji.source)
     onEmojiSelect(selectedMessageId, emoji); 
     toggleModal();
-};
-
+  };
   return (
     <View>
       <Modal transparent={true} animationType="fade" visible={visible}>
@@ -88,7 +90,7 @@ const ChatModalLongPress = ({
                   />
                 </TouchableOpacity> */}
                  {emojis.map((emoji, index) => (
-                  <TouchableOpacity key={index} onPress={() => handleEmojiPress(emoji.source)}>
+                  <TouchableOpacity key={index} onPress={() => handleEmojiPress(emoji)}>
                     <Image style={{ height: 30, width: 30 }} source={emoji.source} />
                   </TouchableOpacity>
                 ))}
@@ -119,6 +121,7 @@ const ChatModalLongPress = ({
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.modalButton}  onPress={() => {
+                console.log(selectedMessageId)
                   if (selectedMessageId) {
                     onDelete(selectedMessageId); 
                     toggleModal(); 

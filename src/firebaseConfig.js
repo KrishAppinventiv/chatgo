@@ -1,4 +1,4 @@
-// Import the functions you need from the SDKs you need
+
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
@@ -12,7 +12,7 @@ const firebaseConfig = {
   measurementId: "G-8C247LX1SP"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 

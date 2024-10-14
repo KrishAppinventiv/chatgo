@@ -148,7 +148,7 @@ const Chat = () => {
     emoji: {id: string; source: any; emoji: any},
   ) => {
     console.log('message', messageId);
-    console.log('emoji', emoji.emoji);
+    
 
     setMsgs(prevMsgs =>
       prevMsgs.map(msg => {
@@ -157,7 +157,8 @@ const Chat = () => {
           const existingReactionIndex = updatedReactions.findIndex(
             reaction => reaction.userId === id,
           );
-
+          console.log("reaction :" , existingReactionIndex)
+          console.log("msgID:",msg._id)
           if (existingReactionIndex > -1) {
             updatedReactions[existingReactionIndex].emoji = emoji.emoji;
           } else {

@@ -34,28 +34,34 @@ const Search = () => {
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+  console.log("listing contacts :", contacts);
   const handleNewChat = async () => {
+   
     const isSimulator = __DEV__;
-
+   
     if (isSimulator) {
       setContacts(Data as CustomContact[]);
-
+   
       setTimeout(() => {
         if (searchInputRef.current) {
           searchInputRef.current.focus();
         }
       }, 100);
       return;
-    }
+    } 
+
+    
 
     setTimeout(async () => {
+     
       if (!Contacts) {
         console.error('Contacts module is not available');
         return;
       }
-
+      
       try {
         const granted = await Contacts.checkPermission();
+       
         if (granted === 'denied') {
           const permission = await Contacts.requestPermission();
           if (permission !== 'authorized') {
@@ -65,7 +71,17 @@ const Search = () => {
         }
 
         const contacts = await Contacts.getAll();
-        setContacts(Data as CustomContact[]);
+        const formattedContacts = contacts.map(contact => ({
+          recordID: contact.recordID,
+          displayName: contact.displayName,
+          givenName: contact.givenName,
+          familyName: contact.familyName,
+          phoneNumbers: contact.phoneNumbers,
+          emailAddresses: contact.emailAddresses,
+        }));
+  
+       console.log("Device Contact",formattedContacts);
+        setContacts(formattedContacts);
         if (searchInputRef.current) {
           searchInputRef.current.focus();
         }
@@ -77,7 +93,7 @@ const Search = () => {
   useEffect(() => {
     handleNewChat();
   }, []);
-  console.log('check', contacts);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.head}>
@@ -103,6 +119,7 @@ const Search = () => {
       <FlatList
         data={searchQuery ? filteredContacts : contacts}
         keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
